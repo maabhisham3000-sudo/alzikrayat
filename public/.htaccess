@@ -1,0 +1,7 @@
+Options -MultiViews
+RewriteEngine On
+
+# إذا لم يكن الملف أو المجلد موجوداً، قم بتوجيه الطلب إلى index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
