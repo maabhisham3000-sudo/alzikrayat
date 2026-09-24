@@ -10,10 +10,21 @@ class PhotoController extends Controller {
         $this->photoModel = new Photo();
     }
 
-    // عرض الصور في الصفحة الرئيسية (المعرض)
+    // عرض الصور والإحصائيات في الصفحة الرئيسية
     public function index() {
         $photos = $this->photoModel->getAllPhotos();
-        $this->view('photos/index', ['photos' => $photos]);
+
+        // جلب الأعداد الحقيقية بأمان من الـ Model
+        $photosCount = $this->photoModel->getPhotosCount();
+        $usersCount = $this->photoModel->getUsersCount();
+        $commentsCount = $this->photoModel->getCommentsCount();
+
+        $this->view('photos/index', [
+            'photos' => $photos,
+            'photosCount' => $photosCount,
+            'usersCount' => $usersCount,
+            'commentsCount' => $commentsCount
+        ]);
     }
 
     // عرض نموذج رفع صورة جديدة
@@ -26,7 +37,7 @@ class PhotoController extends Controller {
         $this->view('photos/create');
     }
 
-    // معالجة عملية رفع الصورة وحفظها
+    // معالجة عملية رفع الصورة
     public function store() {
         session_start();
         if (!isset($_SESSION['user_id'])) {
@@ -42,7 +53,6 @@ class PhotoController extends Controller {
             $file = $_FILES['image'];
             $fileName = time() . '_' . basename($file['name']);
             
-            // تم تعديل مسار الحفظ ليتطابق مع مجلد public/images/uploads/ لديك
             $targetDir = __DIR__ . '/../public/images/uploads/' . $fileName;
 
             if (move_uploaded_file($file['tmp_name'], $targetDir)) {
@@ -55,8 +65,7 @@ class PhotoController extends Controller {
         }
     }
 
-    // عرض تفاصيل صورة واحدة بناءً على الـ ID
-    // عرض تفاصيل صورة واحدة مع التعليقات الخاصة بها
+    // عرض تفاصيل صورة واحدة مع التعليقات
     public function show() {
         $id = $_GET['id'] ?? null;
         
@@ -72,15 +81,14 @@ class PhotoController extends Controller {
             return;
         }
 
-        // جلب التعليقات الخاصة بهذه الصورة
         require_once __DIR__ . '/../models/Comment.php';
         $commentModel = new Comment();
         $comments = $commentModel->getCommentsByPhotoId($id);
 
-        // تمرير الصورة والتعليقات لعرضها في الـ View
         $this->view('photos/show', ['photo' => $photo, 'comments' => $comments]);
     }
-    // حذف الصورة (يُفضل التأكد أن صاحب الصورة هو من يحذفها)
+
+    // حذف الصورة
     public function delete() {
         session_start();
         if (!isset($_SESSION['user_id'])) {
@@ -90,14 +98,13 @@ class PhotoController extends Controller {
 
         $id = $_GET['id'] ?? null;
         if ($id) {
-            // جلب اسم الملف لحذفه من المجلد أيضاً (اختياري واحترافي)
             $photo = $this->photoModel->getPhotoById($id);
             if ($photo) {
                 $filePath = __DIR__ . '/../public/images/uploads/' . $photo['file_name'];
                 if (file_exists($filePath)) {
-                    unlink($filePath); // حذف الملف من الفولدر
+                    unlink($filePath);
                 }
-                $this->photoModel->deletePhoto($id); // حذف السجل من القاعدة
+                $this->photoModel->deletePhoto($id);
             }
         }
         header('Location: /alzikrayat/public/');

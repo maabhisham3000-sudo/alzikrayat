@@ -35,5 +35,5 @@ $router->add('GET', '/alzikrayat/public/forgot', ['AuthController', 'showForgot'
 $router->add('POST', '/alzikrayat/public/forgot/submit', ['AuthController', 'handleForgot']);
 $router->add('GET', '/alzikrayat/public/reset', ['AuthController', 'showReset']);
 $router->add('POST', '/alzikrayat/public/reset/submit', ['AuthController', 'handleReset']);
-// تشغيل الراوتر (يجب أن يكون دائماً في آخر الملف بعد تعريف جميع المسارات بدون استثناء)
+// تشغيل الراوتر //
 $router->dispatch($uri, $method);

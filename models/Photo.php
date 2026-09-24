@@ -25,7 +25,7 @@ class Photo extends Model {
         ]);
     }
 
-    // جلب صورة واحدة بالـ ID مع معلومات المستخدم (أضيفت حديثاً)
+    // جلب صورة واحدة بالـ ID مع معلومات المستخدم
     public function getPhotoById($id) {
         $query = "SELECT photos.*, users.first_name, users.last_name 
                   FROM photos 
@@ -35,6 +35,7 @@ class Photo extends Model {
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
     // حذف الصورة
     public function deletePhoto($id) {
         $query = "DELETE FROM photos WHERE id = :id";
@@ -51,5 +52,23 @@ class Photo extends Model {
             'title' => $title,
             'description' => $description
         ]);
+    }
+
+    // جلب عدد الصور الكلي
+    public function getPhotosCount() {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM photos");
+        return $stmt->fetchColumn();
+    }
+
+    // جلب عدد المستخدمين الكلي
+    public function getUsersCount() {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM users");
+        return $stmt->fetchColumn();
+    }
+
+    // جلب عدد التعليقات الكلي
+    public function getCommentsCount() {
+        $stmt = $this->db->query("SELECT COUNT(*) FROM comments");
+        return $stmt->fetchColumn();
     }
 }

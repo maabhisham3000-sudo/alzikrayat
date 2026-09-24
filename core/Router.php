@@ -6,7 +6,7 @@
 class Router {
     private $routes = [];
 
-    // إضافة مسار جديد للجدول
+    // إضافة مسار جديد للجدول مع تنظيف المسارات
     public function add($method, $path, $handler) {
         $this->routes[] = [
             'method' => strtoupper($method),
@@ -17,7 +17,7 @@ class Router {
 
     // استقبال الـ URL وتوجيهه للكونترولر المناسب
     public function dispatch($uri, $method) {
-        // تنظيف الـ URI وإزالة العلامات الزائدة
+        // تنظيف الـ URI وإزالة العلامات الزائدة والمسافات
         $currentUri = rtrim(parse_url($uri, PHP_URL_PATH), '/');
         $currentMethod = strtoupper($method);
 
@@ -44,6 +44,6 @@ class Router {
 
         // إذا لم يتم العثور على المسار
         http_response_code(404);
-        echo "<h2 style='text-align:center; margin-top:50px; font-family:Tahoma;'>404 - الصفحة غير موجودة</h2>";
+        echo "<h2 style='text-align:center; margin-top:50px; font-family:Tahoma;'>404 - الصفحة غير موجودة للمسار: " . htmlspecialchars($currentUri) . "</h2>";
     }
 }

@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layout/header.php'; ?>
 
-<!-- القسم الترحيبي البسيط والفاخر -->
-<div class="bg-white p-5 mb-5 rounded-4 shadow-sm border border-light text-center">
+<!--  نقطة الوصول عند الضغط على Home -->
+<div id="home-section" class="bg-white p-5 mb-4 rounded-4 shadow-sm border border-light text-center">
     <div class="container" style="max-width: 700px;">
         <h1 class="fw-bold text-dark mb-3">مرحباً بك في الذكريات 📸</h1>
         <p class="text-muted fs-5 mb-4" style="font-weight: 300;">
@@ -21,8 +21,33 @@
     </div>
 </div>
 
-<!-- عنوان المعرض -->
-<div class="d-flex justify-content-between align-items-center mb-4">
+<!-- قسم إحصائيات المنصة الحقيقية -->
+<div class="row text-center mb-5 g-4">
+    <div class="col-md-4">
+        <div class="p-4 bg-white rounded-4 shadow-sm border border-light h-100">
+            <div class="fs-1 mb-2">📸</div>
+            <h3 class="fw-bold text-primary mb-1"><?= number_format($photosCount ?? 0); ?></h3>
+            <p class="text-muted mb-0">Photos</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="p-4 bg-white rounded-4 shadow-sm border border-light h-100">
+            <div class="fs-1 mb-2">👥</div>
+            <h3 class="fw-bold text-success mb-1"><?= number_format($usersCount ?? 0); ?></h3>
+            <p class="text-muted mb-0">Users</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="p-4 bg-white rounded-4 shadow-sm border border-light h-100">
+            <div class="fs-1 mb-2">💬</div>
+            <h3 class="fw-bold text-warning mb-1"><?= number_format($commentsCount ?? 0); ?></h3>
+            <p class="text-muted mb-0">Comments</p>
+        </div>
+    </div>
+</div>
+
+<!--  نقطة الوصول عند الضغط على Gallery -->
+<div id="gallery-section" class="d-flex justify-content-between align-items-center mb-4 pt-3">
     <h4 class="fw-bold text-dark mb-0">أحدث الذكريات</h4>
     <?php if (isset($_SESSION['user_id'])): ?>
         <a href="/alzikrayat/public/photo/upload" class="btn btn-outline-dark btn-sm fw-semibold">إضافة صورة</a>
@@ -54,8 +79,8 @@
     <?php endif; ?>
 </div>
 
-<!-- قسم "من نحن" المبسط والراقي -->
-<section id="about-us" class="bg-white p-5 rounded-4 shadow-sm border border-light mb-5">
+<!-- قسم "من نحن" (About Us) -->
+<section id="about-section" class="bg-white p-5 rounded-4 shadow-sm border border-light mb-5">
     <div class="row justify-content-center text-center">
         <div class="col-lg-8">
             <h4 class="fw-bold text-dark mb-3">عن منصة الذكريات</h4>
