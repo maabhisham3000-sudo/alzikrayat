@@ -8,14 +8,7 @@ log in, upload personal memories and photos, explore
 galleries, and interact through comments and profile 
 management without relying on any external frameworks.
 # Technologies:
-PHP
-MySQL
-HTML5
-CSS3
-JavaScript
-Bootstrap CSS
-Model-View-Controller (MVC) Pattern & 3-Tier Architecture 
-with a Custom Regex Manual Router
+PHP | MySQL | HTML5 | CSS3 | JavaScript | Bootstrap CSS | MVC Pattern & 3-Tier Architecture with Custom Regex Manual Router
 #  How to run:
 1. download the project repository into your local server 
 directory
